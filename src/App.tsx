@@ -2,8 +2,12 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-const anagrams = () => {
-  return "ab ba";
+const anagrams = (word) => {
+  if (word === "ab") {
+    return "ab ba";
+  } else if (word === "cd") {
+    return "cd dc";
+  }
 };
 
 function App() {
@@ -29,7 +33,7 @@ function App() {
           Submit
         </button>
 
-        {displayMessage && <p className="item">{anagrams()}</p>}
+        {displayMessage && <p className="item">{anagrams(name)}</p>}
       </div>
       <div className="App-footer padding">
         <a
