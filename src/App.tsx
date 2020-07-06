@@ -2,12 +2,23 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-const anagrams = (word) => {
-  if (word === "ab") {
-    return "ab ba";
-  } else if (word === "cd") {
-    return "cd dc";
-  }
+const anagrams = (word: string): string => {
+  return word.split('').map((character: string, index: number) => {
+    const head = word.slice(0, index);
+    const tail = word.substring(index+1);
+    
+    const result: string[] = [];
+  
+    for (let nextCharInTail of head) {
+      result.push(character + nextCharInTail);
+    }
+    
+    for (let nextCharInTail of tail) {
+      result.push(character + nextCharInTail);
+    }
+    
+    return result;
+  }).join(" ");
 };
 
 function App() {
