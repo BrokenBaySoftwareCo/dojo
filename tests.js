@@ -1,3 +1,0 @@
-Test("First test", () => {
-  anagrams();
-});
