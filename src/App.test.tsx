@@ -3,19 +3,27 @@ import { render, fireEvent } from "@testing-library/react";
 import App from './App';
 
 test('renders learn react link', () => {
-  const { getByText } = render(<App />);
+  const {getByText} = render(<App/>);
   const linkElement = getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
 
-it('should display "Hello, Tim." after entering name', () => {
-  const { getByText, getByLabelText } = render(<App />);
-
+it('should display anagrams of given input', () => {
+  const {getByText, getByLabelText} = render(<App/>);
+  
   const nameInput = getByLabelText(/name/i);
-  fireEvent.change(nameInput, { target: { value: "Tim" } });
-
+  fireEvent.change(nameInput, {target: {value: "biro"}});
+  
   fireEvent.click(getByText(/submit/i));
-
-  const expectedMessage = "Hello, Tim.";
-  expect(getByText(expectedMessage)).toBeDefined();
+  
+  const expecteAnagrams = [
+    'biro', 'bior', 'brio', 'broi', 'boir', 'bori',
+    'ibro', 'ibor', 'irbo', 'irob', 'iobr', 'iorb',
+    'rbio', 'rboi', 'ribo', 'riob', 'roib', 'robi',
+    'obir', 'obri', 'oibr', 'oirb', 'orbi', 'orib'
+  ];
+  
+  expecteAnagrams.forEach((anagram) => {
+    expect(document.body.innerHTML).toMatch(anagram);
+  })
 });
