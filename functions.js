@@ -1,6 +1,10 @@
 const permutations = [];
-function anagrams() {
+function anagrams() {}
+
+function stringSplit(word) {
+  return word.split("");
 }
+
 // "biro",
 // "bior",
 // "brio",
