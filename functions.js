@@ -1,3 +1,6 @@
+const permutations = [];
+function anagrams() {
+}
 // "biro",
 // "bior",
 // "brio",
