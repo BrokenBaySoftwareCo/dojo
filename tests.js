@@ -1,12 +1,38 @@
-Test("The annagrams function set the global length config.", () => {
-  // Set a global value
-  wordlength = 0;
-  anagrams("word");
-  if (wordlength === 4) {
-    pass(`The global word length config value is set correctly: ${wordlength}`);
+Test("The annagrams function returns the anagrams of biro.", () => {
+  const expectedResultArray = [
+    "biro",
+    "bior",
+    "brio",
+    "broi",
+    "boir",
+    "bori",
+    "ibro",
+    "ibor",
+    "irbo",
+    "irob",
+    "iobr",
+    "iorb",
+    "rbio",
+    "rboi",
+    "ribo",
+    "riob",
+    "roib",
+    "robi",
+    "obir",
+    "obri",
+    "oibr",
+    "oirb",
+    "orbi",
+    "orib",
+  ];
+  const expectedResultString = JSON.stringify(expectedResultArray.sort());
+  const result = anagrams("biro");
+  const resultString = JSON.stringify(result);
+  if (resultString === expectedResultString) {
+    pass(`There's an array of anagrams: ${resultString}`);
   } else {
     fail(
-      `The global word length config value is not set correctly: ${wordlength}`
+      `The result ${resultString} isn't the expected result: ${expectedResultString}`
     );
   }
 });
@@ -30,20 +56,28 @@ Test(
   "Choose a letter from the bag and pass it on, finally updating the word store",
   () => {
     // Setting the globals
-    anagrams("hel");
+    // anagrams("biro");
     wordStore = [];
-    const wordString = "h";
-    const remainingLetters = ["e", "l"];
-    const expectedResultString = JSON.stringify(["hel", "hle"]);
+    const wordString = "b";
+    const remainingLetters = ["i", "r", "o"];
+    const expectedResultArray = [
+      "biro",
+      "bior",
+      "brio",
+      "broi",
+      "boir",
+      "bori",
+    ];
+    const expectedResultString = JSON.stringify(expectedResultArray.sort());
     chooseAndPass(wordString, remainingLetters);
     const resultString = JSON.stringify(wordStore);
     if (resultString === expectedResultString) {
       pass(
-        `There's a new word string and an array of remaining letters: ${resultString}`
+        `There's an array or words using the remaining letters : ${resultString}`
       );
     } else {
       fail(
-        `The returned result ${resultString} isn't the wordStore plus the new wordString: ${expectedResultString}`
+        `The wordstore ${resultString} isn't the expected result: ${expectedResultString}`
       );
     }
   }
@@ -52,10 +86,11 @@ Test(
 Test("Choose the last letter from the bag and update the word store", () => {
   // Global
   wordStore = ["ehl", "elh", "hle", "leh", "lhe"];
-  anagrams("hel");
+  // anagrams("hel");
   const wordString = "he";
   const remainingLetters = ["l"];
-  const expectedResultString = JSON.stringify([...wordStore, "hel"]);
+  const expectedResult = [...wordStore, "hel"];
+  const expectedResultString = JSON.stringify(expectedResult.sort());
   chooseAndPass(wordString, remainingLetters);
   const resultString = JSON.stringify(wordStore);
   if (resultString === expectedResultString) {
@@ -72,12 +107,12 @@ Test("Choose the last letter from the bag and update the word store", () => {
 Test("If there are no remaining letters, just update the wordStore", () => {
   // Changing the global word store
   wordStore = ["oldword1", "oldword2"];
-  anagrams("thewords");
+  // anagrams("thewords");
   const newWord = "newword1";
   const newWordStoreString = JSON.stringify([
+    "newword1",
     "oldword1",
     "oldword2",
-    "newword1",
   ]);
   const remainingLetters = [];
   chooseAndPass(newWord, remainingLetters);
@@ -93,12 +128,12 @@ Test("If there are no remaining letters, just update the wordStore", () => {
 
 Test("Add new word to the word store", () => {
   // Changing the global word store
-  anagrams("thewords");
+  // anagrams("thewords");
   wordStore = ["oldword1", "oldword2"];
   const newWord = "newword1";
   addWordToWordstore(newWord);
   const resultString = JSON.stringify(wordStore);
-  if (resultString === JSON.stringify(["oldword1", "oldword2", "newword1"])) {
+  if (resultString === JSON.stringify(["newword1", "oldword1", "oldword2"])) {
     pass(`There's a new word in the result: ${resultString}`);
   } else {
     fail(`The result is weird: ${resultString}`);
@@ -107,11 +142,11 @@ Test("Add new word to the word store", () => {
 
 Test("Add new word to the word store and it already exists", () => {
   wordStore = ["oldword1", "oldword2"];
-  anagrams("thewords");
+  // anagrams("thewords");
   const newWord = "newword1";
   addWordToWordstore(newWord);
   const resultString = JSON.stringify(wordStore);
-  if (resultString === JSON.stringify(["oldword1", "oldword2", "newword1"])) {
+  if (resultString === JSON.stringify(["newword1", "oldword1", "oldword2"])) {
     pass(`The new (old) word not in the result: ${resultString}`);
   } else {
     fail(`The result is weird: ${resultString}`);

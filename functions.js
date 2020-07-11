@@ -1,8 +1,12 @@
 let wordStore = [];
-let wordlength = 0;
 
 function anagrams(word) {
-  wordlength = word.length;
+  const letters = word.split("");
+  letters.forEach((letter) => {
+    const dwindlingSupplyOfLetters = removeOneLetter(letters, letter);
+    chooseAndPass(letter, dwindlingSupplyOfLetters);
+  });
+  return wordStore;
 }
 
 function chooseAndPass(wordString, remainingLetters) {
@@ -16,15 +20,6 @@ function chooseAndPass(wordString, remainingLetters) {
         newLetter
       );
       chooseAndPass(newWordString, dwindlingSupplyOfLetters);
-      // if (dwindlingSupplyOfLetters.length > 0) {
-      //   dwindlingSupplyOfLetters.forEach((nextLetter) => {
-      //     const newWordString = wordString + nextLetter;
-      //     chooseAndPass(
-      //       newWordString,
-      //       removeOneLetter(dwindlingSupplyOfLetters, nextLetter)
-      //     );
-      //   });
-      // }
     });
   }
 }
@@ -42,32 +37,8 @@ function removeOneLetter(remainingLetters, letter) {
 }
 
 function addWordToWordstore(newWord) {
-  if (!wordStore.includes(newWord) && newWord.length === wordlength) {
+  if (!wordStore.includes(newWord)) {
     wordStore.push(newWord);
   }
+  wordStore.sort();
 }
-
-// "biro",
-// "bior",
-// "brio",
-// "broi",
-// "boir",
-// "bori",
-// "ibro",
-// "ibor",
-// "irbo",
-// "irob",
-// "iobr",
-// "iorb",
-// "rbio",
-// "rboi",
-// "ribo",
-// "riob",
-// "roib",
-// "robi",
-// "obir",
-// "obri",
-// "oibr",
-// "oirb",
-// "orbi",
-// "orib",
